@@ -1,0 +1,586 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>SpringCloud笔记（2） | Syerenc</title><meta name="keywords" content="SpringCloud"><meta name="author" content="lcq"><meta name="copyright" content="lcq"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="微服务进阶前面我们了解了微服务的一套解决方案，但是它是基于Netflix的解决方案，实际上我们发现，很多框架都已经停止维护了，来看看目前我们所认识到的SpringCloud各大组件的维护情况：  注册中心：Eureka（属于Netflix，2.x版本不再开源，1.x版本仍在更新） 服务调用：Ribbon（属于Netflix，停止更新，已经彻底被移除）、SpringCloud Loadbalance">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud笔记（2）">
+<meta property="og:url" content="http://example.com/post/2a78d0be.html">
+<meta property="og:site_name" content="Syerenc">
+<meta property="og:description" content="微服务进阶前面我们了解了微服务的一套解决方案，但是它是基于Netflix的解决方案，实际上我们发现，很多框架都已经停止维护了，来看看目前我们所认识到的SpringCloud各大组件的维护情况：  注册中心：Eureka（属于Netflix，2.x版本不再开源，1.x版本仍在更新） 服务调用：Ribbon（属于Netflix，停止更新，已经彻底被移除）、SpringCloud Loadbalance">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://iw233.cn/api.php?sort=pc">
+<meta property="article:published_time" content="2022-07-26T12:21:53.000Z">
+<meta property="article:modified_time" content="2022-07-26T13:57:44.409Z">
+<meta property="article:author" content="lcq">
+<meta property="article:tag" content="SpringCloud">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://iw233.cn/api.php?sort=pc"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/post/2a78d0be"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SpringCloud笔记（2）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-07-26 21:57:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/source/css/jianbian.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://iw233.cn/api.php?sort=pc')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Syerenc</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SpringCloud笔记（2）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-26T12:21:53.000Z" title="Created 2022-07-26 20:21:53">2022-07-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-07-26T13:57:44.409Z" title="Updated 2022-07-26 21:57:44">2022-07-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/SpringCloud/">SpringCloud</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">11.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>39min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="SpringCloud笔记（2）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="微服务进阶"><a href="#微服务进阶" class="headerlink" title="微服务进阶"></a>微服务进阶</h2><p>前面我们了解了微服务的一套解决方案，但是它是基于Netflix的解决方案，实际上我们发现，很多框架都已经停止维护了，来看看目前我们所认识到的SpringCloud各大组件的维护情况：</p>
+<ul>
+<li><strong>注册中心：</strong>Eureka（属于<em>Netflix</em>，2.x版本不再开源，1.x版本仍在更新）</li>
+<li><strong>服务调用：</strong>Ribbon（属于<em>Netflix</em>，停止更新，已经彻底被移除）、SpringCloud Loadbalancer（属于<em>SpringCloud</em>官方，目前的默认方案）</li>
+<li><strong>服务降级：</strong>Hystrix（属于<em>Netflix</em>，停止更新，已经彻底被移除）</li>
+<li><strong>路由网关：</strong>Zuul（属于<em>Netflix</em>，停止更新，已经彻底被移除）、Gateway（属于<em>SpringCloud</em>官方，推荐方案）</li>
+<li><strong>配置中心：</strong>Config（属于<em>SpringCloud</em>官方）</li>
+</ul>
+<p>可见，我们之前使用的整套解决方案中，超过半数的组件都已经处于不可用状态，并且部分组件都是SpringCloud官方出手提供框架进行解决，因此，寻找一套更好的解决方案势在必行，也就引出了我们本章的主角：<strong>SpringCloud Alibaba</strong></p>
+<blockquote>
+<p>Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用服务的必需组件，方便开发者通过 Spring Cloud 编程模型轻松使用这些组件来开发分布式应用服务。</p>
+<p>依托 Spring Cloud Alibaba，您只需要添加一些注解和少量配置，就可以将 Spring Cloud 应用接入阿里分布式应用解决方案，通过阿里中间件来迅速搭建分布式应用系统。</p>
+</blockquote>
+<p>目前 Spring Cloud Alibaba 提供了如下功能:</p>
+<ol>
+<li><strong>服务限流降级</strong>：支持 WebServlet、WebFlux, OpenFeign、RestTemplate、Dubbo 限流降级功能的接入，可以在运行时通过控制台实时修改限流降级规则，还支持查看限流降级 Metrics 监控。</li>
+<li><strong>服务注册与发现</strong>：适配 Spring Cloud 服务注册与发现标准，默认集成了 Ribbon 的支持。</li>
+<li><strong>分布式配置管理</strong>：支持分布式系统中的外部化配置，配置更改时自动刷新。</li>
+<li><strong>Rpc服务</strong>：扩展 Spring Cloud 客户端 RestTemplate 和 OpenFeign，支持调用 Dubbo RPC 服务</li>
+<li><strong>消息驱动能力</strong>：基于 Spring Cloud Stream 为微服务应用构建消息驱动能力。</li>
+<li><strong>分布式事务</strong>：使用 @GlobalTransactional 注解， 高效并且对业务零侵入地解决分布式事务问题。</li>
+<li><strong>阿里云对象存储</strong>：阿里云提供的海量、安全、低成本、高可靠的云存储服务。支持在任何应用、任何时间、任何地点存储和访问任意类型的数据。</li>
+<li><strong>分布式任务调度</strong>：提供秒级、精准、高可靠、高可用的定时（基于 Cron 表达式）任务调度服务。同时提供分布式的任务执行模型，如网格任务。网格任务支持海量子任务均匀分配到所有 Worker（schedulerx-client）上执行。</li>
+<li><strong>阿里云短信服务</strong>：覆盖全球的短信服务，友好、高效、智能的互联化通讯能力，帮助企业迅速搭建客户触达通道。</li>
+</ol>
+<p>可以看到，SpringCloudAlibaba实际上是对我们的SpringCloud组件增强功能，是SpringCloud的增强框架，可以兼容SpringCloud原生组件和SpringCloudAlibaba的组件。</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0n3ym3j2sj20pg02qa9x.jpg" alt="image-20220326110940692"></p>
+<h2 id="Nacos：更加全能的注册中心"><a href="#Nacos：更加全能的注册中心" class="headerlink" title="Nacos：更加全能的注册中心"></a>Nacos：更加全能的注册中心</h2><p>Nacos（<strong>Na</strong>ming <strong>Co</strong>nfiguration <strong>S</strong>ervice）是一款阿里巴巴开源的服务注册与发现、配置管理的组件，相当于是Eureka+Config的组合。</p>
+<h3 id="安装与部署"><a href="#安装与部署" class="headerlink" title="安装与部署"></a>安装与部署</h3><p>Nacos服务器是独立安装部署的，因此我们需要下载最新的Nacos服务端程序，下载地址：<a target="_blank" rel="noopener" href="https://github.com/alibaba/nacos%EF%BC%8Czip%E5%8E%8B%E7%BC%A9%E5%8C%85%EF%BC%8C%E8%A7%A3%E5%8E%8B%E5%BE%97%E5%88%B0nacos%E7%9B%AE%E5%BD%95%EF%BC%8C%E7%9B%B4%E6%8E%A5%E5%B0%86%E5%85%B6%E6%8B%96%E5%85%A5%E5%88%B0%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%EF%BC%8C%E4%BE%BF%E4%BA%8E%E5%9C%A8IDEA%E5%86%85%E9%83%A8%E5%90%AF%E5%8A%A8%EF%BC%8C%E6%8E%A5%E7%9D%80%E6%B7%BB%E5%8A%A0%E8%BF%90%E8%A1%8C%E9%85%8D%E7%BD%AE%EF%BC%9A">https://github.com/alibaba/nacos，zip压缩包，解压得到nacos目录，直接将其拖入到项目文件夹下，便于在IDEA内部启动，接着添加运行配置：</a></p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0n798coaxj226a0i279d.jpg" alt="image-20220326130340573"></p>
+<p>其中<code>-m standalone</code>表示单节点模式，Mac和Linux下记得将解释器设定为<code>/bin/bash</code>，由于Nacos在Mac/Linux默认是后台启动模式，我们修改一下它的bash文件，让它变成前台启动，这样IDEA关闭了Nacos就自动关闭了，否则开发环境下很容易忘记关：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注释掉 nohup $JAVA $&#123;JAVA_OPT&#125; nacos.nacos &gt;&gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &amp;</span></span><br><span class="line"><span class="comment"># 替换成下面的</span></span><br><span class="line"><span class="variable">$JAVA</span> <span class="variable">$&#123;JAVA_OPT&#125;</span> nacos.nacos</span><br></pre></td></tr></table></figure>
+
+<p>接着我们点击启动：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0n7r3rhzqj22o80jw0wb.jpg" alt="image-20220326132051779"></p>
+<p>OK，启动成功，可以看到它的管理页面地址也是给出来了： <a target="_blank" rel="noopener" href="http://localhost:8848/nacos/index.html">http://localhost:8848/nacos/index.html</a></p>
+<p>账号密码默认是都是<code>nacos</code>。</p>
+<hr>
+<h3 id="服务注册与发现"><a href="#服务注册与发现" class="headerlink" title="服务注册与发现"></a>服务注册与发现</h3><p>现在我们要实现基于Nacos的服务注册与发现，那么就需要导入SpringCloudAlibaba相关的依赖，我们在父工程将依赖进行管理：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      </span><br><span class="line">      	<span class="comment">&lt;!-- 这里引入最新的SpringCloud依赖 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2021.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">          	<span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     	  <span class="comment">&lt;!-- 这里引入最新的SpringCloudAlibaba依赖，2021.0.1.0版本支持SpringBoot2.6.X --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-alibaba-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2021.0.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着我们就可以在子项目中添加服务发现依赖了，比如我们以图书服务为例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>和注册到Eureka一样，我们也需要在配置文件中配置Nacos注册中心的地址：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">	<span class="comment"># 之后所有的图书服务节点就81XX端口</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8101</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://cloudstudy.mysql.cn-chengdu.rds.aliyuncs.com:3306/cloudstudy</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">test</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">  <span class="comment"># 应用名称 bookservice</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">bookservice</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="comment"># 配置Nacos注册中心地址</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br></pre></td></tr></table></figure>
+
+<p>接着启动我们的图书服务，可以在Nacos的服务列表中找到：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24egy1h0n8xfhqcaj22lw0egdih.jpg" alt="image-20220326140130226"></p>
+<p>按照同样的方法，我们接着将另外两个服务也注册到Nacos中。</p>
+<hr>
+<h3 id="负载均衡（OpenFeign）"><a href="#负载均衡（OpenFeign）" class="headerlink" title="负载均衡（OpenFeign）"></a>负载均衡（OpenFeign）</h3><p>接着我们使用OpenFeign，实现服务发现远程调用以及负载均衡，导入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 这里需要单独导入LoadBalancer依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-loadbalancer<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>编写接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(&quot;userservice&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserClient</span> &#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/user/&#123;uid&#125;&quot;)</span></span><br><span class="line">    User <span class="title function_">getUserById</span><span class="params">(<span class="meta">@PathVariable(&quot;uid&quot;)</span> <span class="type">int</span> uid)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(&quot;bookservice&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">BookClient</span> &#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/book/&#123;bid&#125;&quot;)</span></span><br><span class="line">    Book <span class="title function_">getBookById</span><span class="params">(<span class="meta">@PathVariable(&quot;bid&quot;)</span> <span class="type">int</span> bid)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BorrowServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">BorrowService</span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    BorrowMapper mapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    UserClient userClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    BookClient bookClient;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> UserBorrowDetail <span class="title function_">getUserBorrowDetailByUid</span><span class="params">(<span class="type">int</span> uid)</span> &#123;</span><br><span class="line">        List&lt;Borrow&gt; borrow = mapper.getBorrowsByUid(uid);</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userClient.getUserById(uid);</span><br><span class="line">        List&lt;Book&gt; bookList = borrow</span><br><span class="line">                .stream()</span><br><span class="line">                .map(b -&gt; bookClient.getBookById(b.getBid()))</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserBorrowDetail</span>(user, bookList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableFeignClients</span></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BorrowApplication</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(BorrowApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在Controller加些日志输出可以测试负载均衡远程调用。这样我们就实现了基于Nacos的服务的注册与发现，实际上大致流程与Eureka一致。</p>
+<p><strong>值得注意的是，Nacos区分了临时实例和非临时实例：</strong></p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nc2h4gy2j22ay072q44.jpg" alt="image-20220326155010841"></p>
+<p>那么临时和非临时有什么区别呢？</p>
+<ul>
+<li>临时实例：和Eureka一样，采用心跳机制向Nacos发送请求保持在线状态，一旦心跳停止，代表实例下线，不保留实例信息。</li>
+<li>非临时实例：由Nacos主动进行联系，如果连接失败，那么不会移除实例信息，而是将健康状态设定为false，相当于会对某个实例状态持续地进行监控。</li>
+</ul>
+<p>我们可以通过配置文件进行修改临时实例：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">borrowservice</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br><span class="line">        <span class="comment"># 将ephemeral修改为false，表示非临时实例</span></span><br><span class="line">        <span class="attr">ephemeral:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>接着我们在Nacos中查看，可以发现实例已经不是临时的了：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nc8g1llrj22be06iq3y.jpg" alt="image-20220326155554821"></p>
+<p>如果这时我们关闭此实例，那么会变成这样：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nc93w8zlj22bq06mmy5.jpg" alt="image-20220326155633190"></p>
+<p>只是将健康状态变为false，而不会删除实例的信息。</p>
+<hr>
+<h3 id="集群分区（服务分区）"><a href="#集群分区（服务分区）" class="headerlink" title="集群分区（服务分区）"></a>集群分区（服务分区）</h3><p>实际上集群分区概念在之前的Eureka中也有出现，比如：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">		<span class="attr">fetch-registry:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">service-url:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8888/eureka</span></span><br><span class="line">      <span class="comment"># 这个defaultZone是个啥玩意，为什么要用这个名称？为什么要要用这样的形式来声明注册中心？</span></span><br></pre></td></tr></table></figure>
+
+<p>在一个分布式应用中，相同服务的实例可能会在不同的机器、位置上启动，比如我们的用户管理服务，可能在成都有1台服务器部署、重庆有一台服务器部署，而这时，我们在成都的服务器上启动了借阅服务，那么如果我们的借阅服务现在要调用用户服务，就应该优先选择同一个区域的用户服务进行调用，这样会使得响应速度更快。</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0namonso5j21em0bcgnr.jpg" alt="image-20220326150024118"></p>
+<p>因此，我们可以对部署在不同机房的服务进行分区，可以看到实例的分区是默认：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nanxl0kkj22cm0hawh5.jpg" alt="image-20220326150136538"></p>
+<p>我们可以直接在配置文件中进行修改：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">borrowservice</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br><span class="line">        <span class="comment"># 修改为重庆地区的集群</span></span><br><span class="line">        <span class="attr">cluster-name:</span> <span class="string">Chongqing</span></span><br></pre></td></tr></table></figure>
+
+<p>当然由于我们这里使用的是不同的启动配置，直接在启动配置中添加环境变量<code>spring.cloud.nacos.discovery.cluster-name</code>也行，这里我们将用户服务和图书服务两个区域都分配一个，借阅服务就配置为成都地区，在运行配置里添加：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nars805bj216c08ot9x.jpg" alt="image-20220326150518357"></p>
+<p>修改完成之后，我们来尝试重新启动一下（Nacos也要重启），观察Nacos中集群分布情况：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nawm1jraj22ck0u0wij.jpg" alt="image-20220326150956937"></p>
+<p>可以看到现在有两个集群，并且都有一个实例正在运行。我们接着去调用借阅服务，但是发现<strong>并没有按照区域进行优先调用，而依然使用的是轮询模式的负载均衡调用</strong>。</p>
+<p>我们必须要<strong>提供Nacos的负载均衡实现才能开启区域优先调用机制</strong>，只需要在配制文件中进行修改即可：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">borrowservice</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br><span class="line">        <span class="attr">cluster-name:</span> <span class="string">Chengdu</span></span><br><span class="line">    <span class="comment"># 将loadbalancer的nacos支持开启，集成Nacos负载均衡</span></span><br><span class="line">    <span class="attr">loadbalancer:</span></span><br><span class="line">      <span class="attr">nacos:</span></span><br><span class="line">        <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>现在我们重启借阅服务，会发现优先调用的是同区域的用户和图书服务，现在我们可以将成都地区的服务下线：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nbhisubdj22d20ekjtk.jpg" alt="image-20220326153002500"></p>
+<p>可以看到，在下线之后，由于本区域内没有可用服务了，借阅服务将会调用重庆区域的用户服务。</p>
+<p>除了根据区域优先调用之外，同一个区域内的实例也可以单独设置权重，Nacos会优先选择权重更大的实例进行调用，我们可以直接在管理页面中进行配置：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nbecloluj22co0n841e.jpg" alt="image-20220326152659294"></p>
+<p>或是在配置文件中进行配置：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">borrowservice</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br><span class="line">        <span class="attr">cluster-name:</span> <span class="string">Chengdu</span></span><br><span class="line">        <span class="comment"># 权重大小，越大越优先调用，默认为1</span></span><br><span class="line">        <span class="attr">weight:</span> <span class="number">0.5</span></span><br></pre></td></tr></table></figure>
+
+<p>通过配置权重，某些性能不太好的机器就能够更少地被使用，而更多的使用那些网络良好性能更高的主机上的实例。</p>
+<hr>
+<h3 id="配置中心"><a href="#配置中心" class="headerlink" title="配置中心"></a>配置中心</h3><p>前面我们学习了SpringCloud Config，我们可以通过配置服务来加载远程配置，这样我们就可以在远端集中管理配置文件。</p>
+<p>实际上我们可以在<code>bootstrap.yml</code>中配置远程配置文件获取，然后再进入到配置文件加载环节，而Nacos也支持这样的操作，使用方式也比较类似，比如我们现在想要将借阅服务的配置文件放到Nacos进行管理，那么这个时候就需要在Nacos中创建配置文件：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ncoc8fwqj22mq0gidi8.jpg" alt="image-20220326161111523"></p>
+<p>将借阅服务的配置文件全部（当然正常情况下是不会全部CV的，只会复制那些需要经常修改的部分，这里为了省事就直接全部CV了）复制过来，注意<strong>Data ID</strong>的格式跟我们之前一样，<code>应用名称-环境.yml</code>，如果只编写应用名称，那么代表此配置文件无论在什么环境下都会使用，然后每个配置文件都可以进行分组，也算是一种分类方式：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ncyoyq7ij21sw0u0n0o.jpg" alt="image-20220326162108899"></p>
+<p>完成之后点击发布即可：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ncyx3tjnj22cs0bedhs.jpg" alt="image-20220326162122134"></p>
+<p>然后在项目中导入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-bootstrap<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>接着我们在借阅服务中添加<code>bootstrap.yml</code>文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">  	<span class="comment"># 服务名称和配置文件保持一致</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">borrowservice</span></span><br><span class="line">  <span class="attr">profiles:</span></span><br><span class="line">  	<span class="comment"># 环境也是和配置文件保持一致</span></span><br><span class="line">    <span class="attr">active:</span> <span class="string">dev</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">config:</span></span><br><span class="line">      	<span class="comment"># 配置文件后缀名</span></span><br><span class="line">        <span class="attr">file-extension:</span> <span class="string">yml</span></span><br><span class="line">        <span class="comment"># 配置中心服务器地址，也就是Nacos地址</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br></pre></td></tr></table></figure>
+
+<p>现在我们启动服务试试看：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ndcx7e8sj22lw0eiwlz.jpg" alt="image-20220326163449032"></p>
+<p>可以看到成功读取配置文件并启动了，实际上使用上来说跟之前的Config是基本一致的。</p>
+<p>Nacos还支持<strong>配置文件的热更新（使用@RefreshScope注解）</strong>，比如我们在配置文件中添加了一个属性，而这个时候可能需要实时修改，并在后端实时更新，那么这种该怎么实现呢？我们创建一个新的Controller：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;test.txt&#125;&quot;)</span>  <span class="comment">//我们从配置文件中读取test.txt的字符串值，作为test接口的返回值</span></span><br><span class="line">    String txt;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">test</span><span class="params">()</span> &#123;<span class="keyword">return</span> txt;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们修改一下配置文件，然后重启服务器：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ndkk16naj22bs0lstc8.jpg" alt="image-20220326164209154"></p>
+<p>可以看到已经可以正常读取了：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ndljhdc8j217e06it93.jpg" alt="image-20220326164306032"></p>
+<p>现在我们将配置文件的值进行修改：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ndo2g2ouj210e04mmxb.jpg" alt="image-20220326164531412"></p>
+<p>再次访问接口，会发现没有发生变化：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ndodjuhkj2126068jrq.jpg" alt="image-20220326164549862"></p>
+<p>但是后台是成功检测到值更新了，但是值却没改变：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ndpco63fj222e03cq4n.jpg" alt="image-20220326164645791"></p>
+<p>那么如何才能实现配置热更新呢？我们可以像下面这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RefreshScope</span>   <span class="comment">//添加此注解就能实现自动刷新了</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;test.txt&#125;&quot;)</span></span><br><span class="line">    String txt;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">test</span><span class="params">()</span> &#123;<span class="keyword">return</span> txt;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启服务器，再次重复上述实验，成功。</p>
+<hr>
+<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p>我们还可以将配置文件或是服务划分到不同的命名空间中，其实就是区分开发、生产环境或是引用归属之类的：默认有一个public空间</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0new72nlcj22ci0bat9o.jpg" alt="image-20220326172756819"></p>
+<p>这里我们创建一个新的命名空间：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nf6e5ml4j22aa0j875n.jpg" alt="image-20220326173744551"></p>
+<p>可以看到在dev命名空间下，没有任何配置文件和服务：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nfmz4j3gj22mq0j6gom.jpg" alt="image-20220326175340892"></p>
+<p>服务归属到某个命名空间，只需配置文件里指定spring.cloud.nacos.discovery.namespace的值为空间id即可。</p>
+<p>我们在不同的命名空间下，实例和配置都是相互之间隔离的，我们也可以在配置文件中指定当前的命名空间。</p>
+<hr>
+<h3 id="实现高可用（nacos集群）"><a href="#实现高可用（nacos集群）" class="headerlink" title="实现高可用（nacos集群）"></a>实现高可用（nacos集群）</h3><p>由于Nacos暂不支持Arm架构芯片的Mac集群搭建，本小节用Linxu云主机（Nacos比较吃内存，2个Nacos服务器集群，至少2G内存）环境演示。像之前Eureka一样，搭建Nacos集群，实现高可用：</p>
+<p>官方方案：<a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html">https://nacos.io/zh-cn/docs/cluster-mode-quick-start.html</a></p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/deployDnsVipMode.jpg" alt="deployDnsVipMode.jpg"></p>
+<blockquote>
+<p><a href="http://ip1:port/openAPI">http://ip1:port/openAPI</a> 直连ip模式，机器挂则需要修改ip才可以使用。</p>
+<p><a href="http://SLB:port/openAPI">http://SLB:port/openAPI</a> 挂载SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，直连SLB即可，下面挂server真实ip，可读性不好。</p>
+<p><a href="http://nacos.com:port/openAPI">http://nacos.com:port/openAPI</a> 域名 + SLB模式(内网SLB，不可暴露到公网，以免带来安全风险)，可读性好，而且换ip方便，推荐模式</p>
+</blockquote>
+<p>我们来看看它的架构设计，它推荐我们在所有的Nacos服务端之前建立一个负载均衡，我们通过访问负载均衡服务器来间接访问到各个Nacos服务器。实际上就，是比如有三个Nacos服务器做集群，但是每个服务不可能把每个Nacos都去访问一次进行注册，实际上只需要在任意一台Nacos服务器上注册即可，Nacos服务器之间会自动同步信息，但是如果我们随便指定一台Nacos服务器进行注册，如果这台Nacos服务器挂了，但是其他Nacos服务器没挂，这样就没办法完成注册了，但是实际上整个集群还是可用的状态。</p>
+<p>所以这里就需要在所有Nacos服务器之前搭建一个SLB（服务器负载均衡），这样就可以避免上面的问题了。但是我们知道，如果要实现外界对服务访问的负载均衡，我们就得用比如之前说到的Gateway来实现，而这里实际上我们可以用一个更加方便的工具：<strong>Nginx</strong>，来实现（之前我们没讲过，但是使用起来很简单，放心后面会带着大家使用）</p>
+<p>关于SLB最上方还有一个DNS，这个是因为SLB是裸IP，如果SLB服务器修改了地址，那么所有微服务注册的地址也得改，所以这里是通过加域名，通过域名来访问，让DNS去解析真实IP，这样就算改变IP，只需要修改域名解析记录即可，域名地址是不会变化的。</p>
+<p>最后就是Nacos的数据存储模式，在单节点的情况下，Nacos实际上是将数据存放在自带的一个嵌入式数据库中：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0nng0ithgj215i0b875m.jpg" alt="image-20220326222343802"></p>
+<p>而这种模式只适用于单节点，在多节点集群模式下，肯定是不能各存各的，所以，Nacos提供了MySQL统一存储支持，我们只需要让所有的Nacos服务器连接MySQL进行数据存储即可，官方甚至提供好了SQL文件(nacos/conf/nacos-mysql.sql文件)。</p>
+<p>现在就可以开始了，第一步，我们直接导入数据库即可，文件在conf目录中：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24egy1h0nnjw4980j2154090jtf.jpg" alt="image-20220326222728745"></p>
+<p>我们来将其导入到数据库，可以看到生成了很多的表：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24egy1h0nnmgm3g0j21580cqgod.jpg" alt="image-20220326222957239"></p>
+<p>可以为数据库创建相应的用户，设置访问权限和密码。</p>
+<p>然后我们来创建两个Nacos服务器，做一个迷你的集群，这里使用<code>scp</code>命令将nacos服务端上传到Linux服务器（注意需要提前安装好JRE 8或更高版本的环境）：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ob09uny0j21880303z6.jpg" alt="image-20220327115901662"></p>
+<p>解压之后，我们对其配置文件进行修改，首先是<code>application.properties</code>配置文件（在nacos/conf/下），修改以下内容，包括MySQL服务器的信息：端口修改，下面的配置项是取消注释，配好数据库。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">### Default web server port:</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8801</span></span><br><span class="line"><span class="comment">#*************** Config Module Related Configurations ***************#</span></span><br><span class="line"><span class="comment">### If use MySQL as datasource:</span></span><br><span class="line"><span class="attr">spring.datasource.platform</span>=<span class="string">mysql</span></span><br><span class="line"><span class="comment">### Count of DB:</span></span><br><span class="line"><span class="attr">db.num</span>=<span class="string">1</span></span><br><span class="line"><span class="comment">### Connect URL of DB:</span></span><br><span class="line"><span class="attr">db.url.0</span>=<span class="string">jdbc:mysql://cloudstudy.mysql.cn-chengdu.rds.aliyuncs.com:3306/nacos?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC</span></span><br><span class="line"><span class="attr">db.user.0</span>=<span class="string">nacos</span></span><br><span class="line"><span class="attr">db.password.0</span>=<span class="string">nacos</span></span><br></pre></td></tr></table></figure>
+
+<p>然后修改集群配置，这里需要重命名一下（将cluster.conf.example改成cluster.conf，去掉example）：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ob3otjt5j20yc01iglw.jpg" alt="image-20220327120219022"></p>
+<p>端口，记得使用内网IP地址（ifconfig）：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0of8v91lzj211y05mjrr.jpg" alt="image-20220327142541523"></p>
+<p>最后我们修改一下Nacos的内存分配以及前台启动（），直接修改<code>startup.sh</code>文件（）：</p>
+<p>先到最下面修改成前台启动：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注释掉 nohup $JAVA $&#123;JAVA_OPT&#125; nacos.nacos &gt;&gt; $&#123;BASE_DIR&#125;/logs/start.out 2&gt;&amp;1 &amp;</span></span><br><span class="line"><span class="comment"># 替换成下面的</span></span><br><span class="line"><span class="variable">$JAVA</span> <span class="variable">$&#123;JAVA_OPT&#125;</span> nacos.nacos</span><br></pre></td></tr></table></figure>
+
+<p>再修改一下内存</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0oci5kyrzj218m0acn0i.jpg" alt="image-20220327125049013"></p>
+<p>保存之后，将nacos复制一份，并将端口修改为8802，接着启动这两个Nacos服务器（启动时，先cd到目录再启动<code>bash bin/startup.sh</code>）：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ocjew7soj218408ktb8.jpg" alt="image-20220327125201913"></p>
+<p>然后我们打开管理面板，可以看到两个节点都已经启动了：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ocjy2a7dj22mo0j6jtq.jpg" alt="image-20220327125232238"></p>
+<p>这样，我们第二步就完成了，接着我们需要添加一个SLB，这里我们用Nginx做反向代理：</p>
+<blockquote>
+<p><em>Nginx</em> (engine x) 是一个高性能的<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/HTTP">HTTP</a>和<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/7793488">反向代理</a>web服务器，同时也提供了IMAP/POP3/SMTP服务。它相当于在内网与外网之间形成一个网关，所有的请求都可以由Nginx服务器转交给内网的其他服务器。</p>
+</blockquote>
+<p>这里我们直接安装：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nginx</span><br></pre></td></tr></table></figure>
+
+<p>可以看到直接请求80端口之后得到，表示安装成功：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ocrv94q3j22mi0eidi8.jpg" alt="image-20220327130009391"></p>
+<p>现在我们需要让其代理我们刚刚启动的两个Nacos服务器，我们需要对其进行一些配置。配置文件位于<code>/etc/nginx/nginx.conf</code>，添加以下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#添加我们在上游刚刚创建好的两个nacos服务器</span><br><span class="line">upstream nacos-server &#123;</span><br><span class="line">        server 10.0.0.12:8801;</span><br><span class="line">        server 10.0.0.12:8802;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">        listen   80;</span><br><span class="line">        server_name  1.14.121.107;</span><br><span class="line"></span><br><span class="line">        location /nacos &#123;</span><br><span class="line">                proxy_pass http://nacos-server;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启Nginx服务器，成功连接：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ofsnlufwj21wa0u0wis.jpg" alt="image-20220327144441878"></p>
+<p>然后我们将所有的服务全部修改为云服务器上Nacos的地址，启动试试看。</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0og0j7z8dj22mg0l0gpk.jpg" alt="image-20220327145216771"></p>
+<p>这样，我们就搭建好了Nacos集群。</p>
+<hr>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0oh42qki6j21ns0aw0th.jpg" alt="image-20220327153016414"></p>
+<h2 id="Sentinel-流量防卫兵"><a href="#Sentinel-流量防卫兵" class="headerlink" title="Sentinel 流量防卫兵"></a>Sentinel 流量防卫兵</h2><p><strong>注意：</strong>这一章有点小绕，思路理清。</p>
+<p>经过之前的学习，我们了解了微服务存在的雪崩问题，也就是说一个微服务出现问题，有可能导致整个链路直接不可用，这种时候我们就需要进行及时的熔断和降级，这些策略，我们之前通过使用Hystrix来实现。</p>
+<p>SpringCloud Alibaba也有自己的微服务容错组件，但是它相比Hystrix更加的强大。</p>
+<blockquote>
+<p>随着微服务的流行，服务和服务之间的稳定性变得越来越重要。Sentinel 以流量为切入点，从流量控制、熔断降级、系统负载保护等多个维度保护服务的稳定性。</p>
+</blockquote>
+<p>Sentinel 具有以下特征:</p>
+<ul>
+<li><strong>丰富的应用场景</strong>：Sentinel 承接了阿里巴巴近 10 年的双十一大促流量的核心场景，例如秒杀（即突发流量控制在系统容量可以承受的范围）、消息削峰填谷、集群流量控制、实时熔断下游不可用应用等。</li>
+<li><strong>完备的实时监控</strong>：Sentinel 同时提供实时的监控功能。您可以在控制台中看到接入应用的单台机器秒级数据，甚至 500 台以下规模的集群的汇总运行情况。</li>
+<li><strong>广泛的开源生态</strong>：Sentinel 提供开箱即用的与其它开源框架/库的整合模块，例如与 Spring Cloud、Apache Dubbo、gRPC、Quarkus 的整合。您只需要引入相应的依赖并进行简单的配置即可快速地接入 Sentinel。同时 Sentinel 提供 Java/Go/C++ 等多语言的原生实现。</li>
+<li><strong>完善的 SPI 扩展机制</strong>：Sentinel 提供简单易用、完善的 SPI 扩展接口。您可以通过实现扩展接口来快速地定制逻辑。例如定制规则管理、适配动态数据源等。</li>
+</ul>
+<h3 id="安装与部署-1"><a href="#安装与部署-1" class="headerlink" title="安装与部署"></a>安装与部署</h3><p>和Nacos一样，它是独立安装和部署的，下载地址：<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel/releases">https://github.com/alibaba/Sentinel/releases</a></p>
+<p>注意下载下来之后是一个<code>jar</code>文件（其实就是个SpringBoot项目），我们需要在IDEA中添加一些运行配置：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0oiu9a58tj22ae0dgdjy.jpg" alt="image-20220327163002399"></p>
+<p>接着就可以直接启动啦，当然默认端口占用8080，如果需要修改，可以添加环境变量：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0oivfso85j218e04cmxt.jpg" alt="image-20220327163110733"></p>
+<p>启动之后，就可以访问到Sentinel的监控页面了，用户名和密码都是<code>sentinel</code>，地址：<a target="_blank" rel="noopener" href="http://localhost:8858/#/dashboard">http://localhost:8858/#/dashboard</a></p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0oiweerr4j22mg0dwwfm.jpg" alt="image-20220327163206117"></p>
+<p>这样就成功开启监控页面了，接着我们需要让我们的服务连接到Sentinel控制台，老规矩，在各服务里导入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-sentinel<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在配置文件中添加Sentinel相关信息（实际上Sentinel是本地在进行管理，但是我们可以连接到监控页面，这样就可以图形化操作了）：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">userservice</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">      	<span class="comment"># 添加监控页面地址即可</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8858</span></span><br></pre></td></tr></table></figure>
+
+<p>现在启动我们的服务，然后访问一次服务，这样Sentinel中就会存在信息了（懒加载机制，不会一上来就加载，使用时才加载）：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0oj5uuyfwj21ny074js0.jpg" alt="image-20220327164111325"></p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0oj8drp9hj223m0u00wi.jpg" alt="image-20220327164336877"></p>
+<p>现在我们就可以在Sentinel控制台中对我们的服务运行情况进行实时监控了，可以看到监控的内容非常的多，包括时间点、QPS(Queries Per Second，每秒查询率)、响应时间等数据。</p>
+<p>按照上面的方式，我们将所有的服务全部连接到Sentinel管理面板中。</p>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>Sentinel的第一个功能，流量控制。</p>
+<p>服务器不可能无限制的接受和处理客户端的请求，如果不加以限制，当发生高并发情况时，系统资源将很快被耗尽。为了避免这种情况，我们就可以添加流量控制（也可以说是限流）当一段时间内的流量到达一定的阈值的时候，新的请求将不再进行处理，这样不仅可以合理地应对高并发请求，同时也能在一定程度上保护服务器不受到外界的恶意攻击。</p>
+<h4 id="（1）限流策略："><a href="#（1）限流策略：" class="headerlink" title="（1）限流策略："></a>（1）限流策略：</h4><ul>
+<li>方案一：<strong>快速拒绝</strong>，既然不再接受新的请求，那么我们可以直接返回一个拒绝信息，告诉用户访问频率过高。</li>
+<li>方案二：<strong>预热</strong>，依然基于方案一，但是由于某些情况下高并发请求是在某一时刻突然到来，我们可以缓慢地将阈值提高到指定阈值，形成一个缓冲保护。</li>
+<li>方案三：<strong>排队等待</strong>，不接受新的请求，但是也不直接拒绝，而是进队列先等一下，如果规定时间内能够执行，那么就执行，要是超时就算了。</li>
+</ul>
+<p>针对于是否超过流量阈值的判断，这里我们提4种算法：</p>
+<p>1、<strong>漏桶算法</strong></p>
+<p>顾名思义，就像一个桶开了一个小孔，水流进桶中的速度肯定是远大于水流出桶的速度的，这也是最简单的一种限流思路：当桶的容量已满时，这时就只有丢弃请求了。</p>
+<p>2、<strong>令牌桶算法</strong></p>
+<p>只能说有点像信号量机制。现在有一个令牌桶，这个桶是专门存放令牌的，每隔一段时间就向桶中丢入一个令牌（速度由我们指定）当新的请求到达时，将从桶中删除令牌，接着请求就可以通过并给到服务，但是如果桶中的令牌数量不足，那么不会删除令牌，而是让此数据包等待。</p>
+<p>当流量下降时，令牌桶中的令牌会逐渐积累，这样如果突然出现高并发，那么就能在短时间内拿到大量的令牌</p>
+<p>3、<strong>固定时间窗口算法</strong></p>
+<p>我们可以对某一个时间段内的请求进行统计和计数，比如在<code>14:15</code>到<code>14:16</code>这一分钟内，请求量不能超过<code>100</code>，也就是一分钟之内不能超过<code>100</code>次请求，那么就可以像下面这样进行划分：在整分时划分区间，统计请求数。</p>
+<p>虽然这种模式看似比较合理，但是试想一下这种情况：</p>
+<ul>
+<li>14:15:59的时候来了100个请求</li>
+<li>14:16:01的时候又来了100个请求</li>
+</ul>
+<p>出现上面这种情况，符合固定时间窗口算法的规则，所以这200个请求都能正常接受，但是，这种情况却是在3秒内出现了200个请求，很明显已经违背了我们的初衷。因此，当遇到临界点时，固定时间窗口算法存在安全隐患。</p>
+<p>4、<strong>滑动时间窗口算法</strong></p>
+<p>相对于固定窗口算法，滑动时间窗口算法更加灵活，它会动态移动窗口，重新进行计算。</p>
+<p>在Sentinel中进行实际测试一下，打开管理页面的簇点链路模块，可以看到自动识别的服务调用链路：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ol71o173j229j0u0444.jpg" alt="image-20220327175131519"></p>
+<p>这里演示对我们的借阅接口进行限流，点击<code>流控</code>，会看到让我们添加流控规则：</p>
+<ul>
+<li>阈值类型：QPS就是每秒钟的请求数量，并发线程数是按服务当前使用的线程数据进行统计的。</li>
+<li>流控模式：当达到阈值时，流控的对象，这里暂时只用直接（直接，关联，链路）。</li>
+<li>流控效果：就是我们上面所说的三种方案（快速拒绝，预热，排队）。</li>
+</ul>
+<p>这里我们选择<code>QPS</code>、阈值设定为<code>1</code>，流控模式选择<code>直接</code>、流控效果选择<code>快速失败</code>，可以看到，当我们快速地进行请求时，会直接返回失败信息：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ole5mz4jj21d406it9b.jpg" alt="image-20220327175821941"></p>
+<p>这里各位最好自行尝试一下其他的流控效果，熟悉和加深印象。</p>
+<h4 id="（2）流控模式："><a href="#（2）流控模式：" class="headerlink" title="（2）流控模式："></a>（2）流控模式：</h4><ul>
+<li>直接：只针对于当前接口。</li>
+<li>关联：当其他接口超过阈值时，会导致当前接口被限流。</li>
+<li>链路：更细粒度的限流，能精确到具体的方法。</li>
+</ul>
+<p>1）我们首先来看看关联模式，比如现在我们对自带的<code>/error</code>接口进行限流：</p>
+<img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/image-20220726205625967.png" alt="image-20220726205625967" style="zoom:67%;" />
+
+<p>注意限流是作用于关联资源的，一旦发现关联资源超过阈值，那么就会对当前的资源进行限流，我们现在来测试一下，这里使用PostMan的Runner（右下）连续对关联资源发起100次请求。开启Postman，然后我们会发现借阅服务已经凉凉：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24egy1h0omeqzhpij215o06c3z3.jpg" alt="image-20220327183331595"></p>
+<p>2）链路模式，它能够更加精准的进行流量控制，链路流控模式指的是，当从指定接口过来的资源请求达到限流条件时，开启限流，这里得先讲解一下<code>@SentinelResource</code>的使用。</p>
+<p>我们可以对某一个方法进行限流控制，无论是谁在何处调用了它，这里需要使用到<code>@SentinelResource</code>，一旦方法被标注，那么就会进行监控，比如我们这里创建两个请求映射，都来调用Service的被监控方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BorrowController</span> &#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    BorrowService service;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/borrow/&#123;uid&#125;&quot;)</span></span><br><span class="line">    UserBorrowDetail <span class="title function_">findUserBorrows</span><span class="params">(<span class="meta">@PathVariable(&quot;uid&quot;)</span> <span class="type">int</span> uid)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> service.getUserBorrowDetailByUid(uid);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/borrow2/&#123;uid&#125;&quot;)</span></span><br><span class="line">    UserBorrowDetail <span class="title function_">findUserBorrows2</span><span class="params">(<span class="meta">@PathVariable(&quot;uid&quot;)</span> <span class="type">int</span> uid)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> service.getUserBorrowDetailByUid(uid);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BorrowServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">BorrowService</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    BorrowMapper mapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    UserClient userClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    BookClient bookClient;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@SentinelResource(&quot;getBorrow&quot;)</span>   <span class="comment">//监控此方法，无论被谁执行都在监控范围内，这里给的value是自定义名称，这个注解可以加在任何方法上，包括Controller中的请求映射方法，跟HystrixCommand很像</span></span><br><span class="line">    <span class="keyword">public</span> UserBorrowDetail <span class="title function_">getUserBorrowDetailByUid</span><span class="params">(<span class="type">int</span> uid)</span> &#123;</span><br><span class="line">        List&lt;Borrow&gt; borrow = mapper.getBorrowsByUid(uid);</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userClient.getUserById(uid);</span><br><span class="line">        List&lt;Book&gt; bookList = borrow</span><br><span class="line">                .stream()</span><br><span class="line">                .map(b -&gt; bookClient.getBookById(b.getBid()))</span><br><span class="line">                .collect(Collectors.toList());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserBorrowDetail</span>(user, bookList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着添加配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">borrowservice</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8858</span></span><br><span class="line">      <span class="comment"># 关闭Context收敛，这样被监控方法可以进行不同链路的单独控制</span></span><br><span class="line">      <span class="attr">web-context-unify:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>然后我们在Sentinel控制台中添加流控规则，注意是针对此方法，可以看到已经自动识别到borrow接口下调用了这个方法：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pfp1fhrcj22bh0u00yg.jpg" alt="image-20220328112645048"></p>
+<p>最后我们在浏览器中对这两个接口都进行测试，会发现，无论请求哪个接口，只要调用了Service中的<code>getUserBorrowDetailByUid</code>这个方法，都会被限流。<strong>注意限流的形式是后台直接抛出异常</strong>，至于怎么处理我们后面再说。</p>
+<p>那么这个链路选项实际上就是决定只限流从哪个方向来的调用，比如我们只对<code>borrow2</code>这个接口对<code>getUserBorrowDetailByUid</code>方法的调用进行限流，那么我们就可以为其指定链路：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pfs7hqj4j224s0u0dkb.jpg" alt="image-20220328112949894"></p>
+<p>然后我们会发现，限流效果只对我们配置的链路接口有效，而其他链路是不会被限流的。</p>
+<p>除了直接对接口进行限流规则控制之外，我们也可以根据当前系统的资源使用情况，决定是否进行限流：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0q18q6t5vj22dk0u0q72.jpg" alt="image-20220328235217680"></p>
+<p>系统规则支持以下的模式：</p>
+<ul>
+<li><strong>Load 自适应</strong>（仅对 Linux/Unix-like 机器生效）：系统的 load1 作为启发指标，进行自适应系统保护。当系统 load1 超过设定的启发值，且系统当前的并发线程数超过估算的系统容量时才会触发系统保护（BBR 阶段）。系统容量由系统的 <code>maxQps * minRt</code> 估算得出。设定参考值一般是 <code>CPU cores * 2.5</code>。</li>
+<li><strong>CPU usage</strong>（1.5.0+ 版本）：当系统 CPU 使用率超过阈值即触发系统保护（取值范围 0.0-1.0），比较灵敏。</li>
+<li><strong>平均 RT</strong>：当单台机器上所有入口流量的平均 RT 达到阈值即触发系统保护，单位是毫秒。</li>
+<li><strong>并发线程数</strong>：当单台机器上所有入口流量的并发线程数达到阈值即触发系统保护。</li>
+<li><strong>入口 QPS</strong>：当单台机器上所有入口流量的 QPS 达到阈值即触发系统保护。</li>
+</ul>
+<p>这里就不进行演示了。</p>
+<h3 id="限流和异常处理"><a href="#限流和异常处理" class="headerlink" title="限流和异常处理"></a>限流和异常处理</h3><p>现在我们已经了解了如何进行限流操作，那么限流状态下的返回结果该怎么修改呢，我们看到被限流之后返回的是Sentinel默认的数据，现在我们希望自定义改如何操作？</p>
+<p>这里我们先创建好被限流状态下需要返回的内容，定义一个请求映射：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/blocked&quot;)</span></span><br><span class="line">JSONObject <span class="title function_">blocked</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">JSONObject</span> <span class="variable">object</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">    object.put(<span class="string">&quot;code&quot;</span>, <span class="number">403</span>);</span><br><span class="line">    object.put(<span class="string">&quot;success&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">    object.put(<span class="string">&quot;massage&quot;</span>, <span class="string">&quot;您的请求频率过快，请稍后再试！&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> object;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着我们在配置文件中将此页面设定为限流页面：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">sentinel:</span></span><br><span class="line">      <span class="attr">transport:</span></span><br><span class="line">        <span class="attr">dashboard:</span> <span class="string">localhost:8858</span></span><br><span class="line">      <span class="comment"># 将刚刚编写的请求映射设定为限流页面</span></span><br><span class="line">      <span class="attr">block-page:</span> <span class="string">/blocked</span></span><br></pre></td></tr></table></figure>
+
+<p>这样，当被限流时，就会被重定向到指定页面：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pmyc5o1uj21gi06m3zc.jpg" alt="image-20220328153755461"></p>
+<p>那么，对于方法级别的限流呢？经过前面的学习我们知道，当某个方法被限流时，会直接在后台抛出异常，那么这种情况我们该怎么处理呢，比如我们之前在Hystrix中可以直接添加一个替代方案，这样当出现异常时会直接执行我们的替代方法并返回，Sentinel也可以。</p>
+<p>比如我们还是在<code>getUserBorrowDetailByUid</code>方法上进行配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="meta">@SentinelResource(value = &quot;getBorrow&quot;, blockHandler = &quot;blocked&quot;)</span>   <span class="comment">//指定blockHandler为替代方案的方法，也就是被限流之后的替代解决方案，这样就不会使用默认的抛出异常的形式了</span></span><br><span class="line"><span class="keyword">public</span> UserBorrowDetail <span class="title function_">getUserBorrowDetailByUid</span><span class="params">(<span class="type">int</span> uid)</span> &#123;</span><br><span class="line">    List&lt;Borrow&gt; borrow = mapper.getBorrowsByUid(uid);</span><br><span class="line">    <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userClient.getUserById(uid);</span><br><span class="line">    List&lt;Book&gt; bookList = borrow</span><br><span class="line">            .stream()</span><br><span class="line">            .map(b -&gt; bookClient.getBookById(b.getBid()))</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserBorrowDetail</span>(user, bookList);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//替代方案，注意参数和返回值需要保持一致，并且参数最后还需要额外添加一个BlockException</span></span><br><span class="line"><span class="keyword">public</span> UserBorrowDetail <span class="title function_">blocked</span><span class="params">(<span class="type">int</span> uid, BlockException e)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserBorrowDetail</span>(<span class="literal">null</span>, Collections.emptyList());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，一旦被限流将执行替代方案，最后返回的结果就是：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pn56vzirj217y06kaai.jpg" alt="image-20220328154430549"></p>
+<p>注意<code>blockHandler</code>只能处理限流情况下抛出的异常，包括下面即将要介绍的热点参数限流也是同理，如果是方法本身抛出的其他类型异常，不在管控范围内，但是可以通过其他参数进行处理：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line"><span class="meta">@SentinelResource(value = &quot;test&quot;,</span></span><br><span class="line"><span class="meta">        fallback = &quot;except&quot;,    //fallback指定出现异常时的替代方案</span></span><br><span class="line"><span class="meta">        exceptionsToIgnore = IOException.class)</span>  <span class="comment">//忽略那些异常，也就是说这些异常出现时不使用替代方案</span></span><br><span class="line">String <span class="title function_">test</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;HelloWorld！&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//替代方法必须和原方法返回值和参数一致，最后可以添加一个Throwable作为参数接受异常</span></span><br><span class="line">String <span class="title function_">except</span><span class="params">(Throwable t)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> t.getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，其他的异常也可以有替代方案了：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0po5s15rej218u06uwev.jpg" alt="image-20220328161940219"></p>
+<p>特别注意这种方式会在没有配置<code>blockHandler</code>的情况下，将Sentinel机制内（也就是限流的异常）的异常也一并处理了，如果配置了<code>blockHandler</code>，那么在出现限流时，依然只会执行<code>blockHandler</code>指定的替代方案（因为限流是在方法执行之前进行的）</p>
+<h3 id="热点参数限流"><a href="#热点参数限流" class="headerlink" title="热点参数限流"></a>热点参数限流</h3><p>我们还可以对某一热点数据进行精准限流，比如在某一时刻，不同参数被携带访问的频率是不一样的：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://localhost:8301/test?a=10">http://localhost:8301/test?a=10</a>  访问100次</li>
+<li><a target="_blank" rel="noopener" href="http://localhost:8301/test?b=10">http://localhost:8301/test?b=10</a>  访问0次</li>
+<li><a target="_blank" rel="noopener" href="http://localhost:8301/test?c=10">http://localhost:8301/test?c=10</a>  访问3次</li>
+</ul>
+<p>由于携带参数<code>a</code>的请求比较多，我们就可以只对携带参数<code>a</code>的请求进行限流。</p>
+<p>这里我们创建一个新的测试请求映射：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line"><span class="meta">@SentinelResource(&quot;test&quot;)</span>   <span class="comment">//注意这里需要添加@SentinelResource才可以，用户资源名称就使用这里定义的资源名称</span></span><br><span class="line">String <span class="title function_">findUserBorrows2</span><span class="params">(<span class="meta">@RequestParam(value = &quot;a&quot;, required = false)</span> <span class="type">int</span> a,  //请求参数都设置为非必须的</span></span><br><span class="line"><span class="params">                        <span class="meta">@RequestParam(value = &quot;b&quot;, required = false)</span> <span class="type">int</span> b,</span></span><br><span class="line"><span class="params">                        <span class="meta">@RequestParam(value = &quot;c&quot;,required = false)</span> <span class="type">int</span> c)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;请求成功！a = &quot;</span>+a+<span class="string">&quot;, b = &quot;</span>+b+<span class="string">&quot;, c = &quot;</span>+c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动之后，我们在Sentinel里面进行热点配置：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0plrnnjlqj22fh0u0aec.jpg" alt="image-20220328145654180"></p>
+<p>然后开始访问我们的测试接口，可以看到在携带参数a时，当访问频率超过设定值，就会直接被限流，这里是直接在后台抛出异常：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pls7lm97j21j20d6q4z.jpg" alt="image-20220328145726479"></p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0plto9gujj222e07imyn.jpg" alt="image-20220328145851133"></p>
+<p>而我们使用其他参数或是不带<code>a</code>参数，那么就不会出现这种问题了：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pltgil5hj214w07mwf3.jpg" alt="image-20220328145838378"></p>
+<p>除了直接对某个参数精准限流外，我们还可以对参数携带的指定值单独设定阈值，比如我们现在不仅希望对参数<code>a</code>限流，而且还希望当参数<code>a</code>的值为10时，QPS达到5再进行限流，那么就可以设定例外：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0plwl48w0j220a0u0gp0.jpg" alt="image-20220328150138096"></p>
+<p>这样，当请求携带参数<code>a</code>，且参数<code>a</code>的值为10时，阈值将按照我们指定的特例进行计算。</p>
+<h3 id="服务熔断和降级"><a href="#服务熔断和降级" class="headerlink" title="服务熔断和降级"></a>服务熔断和降级</h3><p>还记得我们前所说的服务降级吗，也就是说我们需要在整个微服务调用链路出现问题的时候，及时对服务进行降级，以防止问题进一步恶化。</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ky50sw4jj219s07yabg.jpg" alt="image-20220324141706946"></p>
+<p>那么，各位是否有思考过，如果在某一时刻，服务B出现故障（可能就卡在那里了），而这时服务A依然有大量的请求，在调用服务B，那么，由于服务A没办法再短时间内完成处理，<strong>新来的请求就会导致线程数不断地增加</strong>，这样，CPU的资源很快就会被耗尽。那么要防止这种情况，就只能进行隔离了，这里我们提两种：</p>
+<h4 id="隔离方案"><a href="#隔离方案" class="headerlink" title="隔离方案"></a>隔离方案</h4><h5 id="线程池隔离"><a href="#线程池隔离" class="headerlink" title="线程池隔离"></a><strong>线程池隔离</strong></h5><p>线程池隔离实际上就是对每个服务的远程调用单独开放线程池，比如服务A要调用服务B，那么只使用一个固定数量的线程池取进行远程调用，这样即使在短时间内出现大量请求，由于没有线程可以分配，所以就不会导致资源耗尽了（线程池2内线程耗尽，不会影响其它线程池的运行）。</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0ph7xi5qbj21fo09y404.jpg" alt="image-20220328121932455"></p>
+<h5 id="信号量隔离"><a href="#信号量隔离" class="headerlink" title="信号量隔离"></a><strong>信号量隔离</strong></h5><p>信号量隔离是使用<code>Semaphore</code>类实现的，思想基本上与上面是相同的，也是限制远程调用的线程数量，但是它相对于线程池隔离，开销会更小一些，使用效果同样优秀，也支持超时等。</p>
+<p>Sentinel也正是采用的这种方案实现隔离的。</p>
+<h4 id="服务降级："><a href="#服务降级：" class="headerlink" title="服务降级："></a>服务降级：</h4><p>当下游服务因为某种原因变得不可用或响应过慢时，上游服务为了保证自己整体服务的可用性，不再继续调用目标服务而是快速返回或是执行自己的替代方案，这便是服务降级。</p>
+<img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0phzsecsij20ig0i274r.jpg" alt="image-20220328124619289" style="zoom:67%;" />
+
+<p>整个过程分为三个状态：</p>
+<ul>
+<li>关闭：熔断器不工作，所有请求全部该干嘛干嘛。</li>
+<li>打开：熔断器工作，所有请求一律降级处理。</li>
+<li>半开：尝试进行一下下正常流程，要是还不行继续保持打开状态，否则关闭。</li>
+</ul>
+<p>那么我们来看看Sentinel中如何进行熔断和降级操作，打开管理页面，我们可以自由新增熔断规则：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pi4xii37j22mo0t4dku.jpg" alt="image-20220328125115760"></p>
+<h4 id="熔断策略的三种模式："><a href="#熔断策略的三种模式：" class="headerlink" title="熔断策略的三种模式："></a>熔断策略的三种模式：</h4><ol>
+<li><p><strong>慢调用比例：</strong>如果出现那种半天都处理不完的调用，有可能就是服务出现故障，导致卡顿，这个选项是按照<strong>最大响应时间</strong>（RT）进行判定，如果一次请求的处理时间超过了指定的RT，那么就被判定为<code>慢调用</code>，在一个统计时长内，如果请求数目大于最小请求数目，并且被判定为<code>慢调用</code>的请求比例已经超过阈值，将触发熔断。经过<strong>熔断时长</strong>之后，将会进入到半开状态进行试探（这里和Hystrix一致）</p>
+<p>然后修改一下接口的执行，我们模拟一下慢调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/borrow2/&#123;uid&#125;&quot;)</span></span><br><span class="line">UserBorrowDetail <span class="title function_">findUserBorrows2</span><span class="params">(<span class="meta">@PathVariable(&quot;uid&quot;)</span> <span class="type">int</span> uid)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启，然后我们创建一个新的熔断规则：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pipk23g6j227a0o0tbt.jpg" alt="image-20220328131105084"></p>
+<p>可以看到，超时直接触发了熔断，进入到阻止页面：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pior2olsj21nm088wf8.jpg" alt="image-20220328131018951"></p>
+</li>
+<li><p><strong>异常比例：</strong>这个与慢调用比例类似，不过这里判断的是出现异常的次数，与上面一样，我们也来进行一些小测试：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/borrow2/&#123;uid&#125;&quot;)</span></span><br><span class="line">UserBorrowDetail <span class="title function_">findUserBorrows2</span><span class="params">(<span class="meta">@PathVariable(&quot;uid&quot;)</span> <span class="type">int</span> uid)</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动服务器，接着添加我们的熔断规则：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pj3qutgtj225o0noju9.jpg" alt="image-20220328132443315"></p>
+<p>现在我们进行访问，会发现后台疯狂报错，然后就熔断了：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pj7f4fgbj22180cswjm.jpg" alt="image-20220328132815856"></p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pj78bdkgj21a606i3z5.jpg" alt="image-20220328132804164"></p>
+</li>
+<li><p><strong>异常数：</strong>这个和上面的唯一区别就是，只要达到指定的异常数量，就熔断，这里我们修改一下熔断规则：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pj8oajy0j221u0nk419.jpg" alt="image-20220328132927745"></p>
+<p>现在我们再次不断访问此接口，可以发现，效果跟之前其实是差不多的，只是判断的策略稍微不同罢了：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pj78bdkgj21a606i3z5.jpg" alt="image-20220328132804164"></p>
+</li>
+</ol>
+<p>那么熔断规则如何设定我们了解了，那么，如何自定义服务降级呢？之前在使用Hystrix的时候，如果出现异常，可以执行我们的替代方案，Sentinel也是可以的。</p>
+<p>同样的，我们只需要在<code>@SentinelResource</code>中配置<code>blockHandler</code>参数（那这里跟前面那个方法限流的配置不是一毛一样吗？没错，因为如果添加了<code>@SentinelResource</code>注解，那么这里会进行方法级别细粒度的限制，和之前方法级别限流一样，会在降级之后直接抛出异常，如果不添加则返回默认的限流页面，<code>blockHandler</code>的目的就是处理这种Sentinel机制上的异常，所以这里其实和之前的限流配置是一个道理，因此下面熔断配置也应该对<code>value</code>自定义名称的资源进行配置，才能作用到此方法上）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/borrow2/&#123;uid&#125;&quot;)</span></span><br><span class="line"><span class="meta">@SentinelResource(value = &quot;findUserBorrows2&quot;, blockHandler = &quot;test&quot;)</span></span><br><span class="line">UserBorrowDetail <span class="title function_">findUserBorrows2</span><span class="params">(<span class="meta">@PathVariable(&quot;uid&quot;)</span> <span class="type">int</span> uid)</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">UserBorrowDetail <span class="title function_">test</span><span class="params">(<span class="type">int</span> uid, BlockException e)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">UserBorrowDetail</span>(<span class="keyword">new</span> <span class="title class_">User</span>(), Collections.emptyList());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接着我们对进行熔断配置，注意是对我们添加的<code>@SentinelResource</code>中指定名称的<code>findUserBorrows2</code>进行配置：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pno8hcvoj22le0nuafl.jpg" alt="image-20220328160248977"></p>
+<p>OK，可以看到熔断之后，服务降级之后的效果：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pnmjycafj21ci06o3z9.jpg" alt="image-20220328160112038"></p>
+<p>最后我们来看一下如何让Feign的也支持Sentinel，前面我们使用Hystrix的时候，就可以直接对Feign的每个接口调用单独进行服务降级，而使用Sentinel，也是可以的，首先我们需要在配置文件中开启支持：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">sentinel:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>之后的步骤其实和之前是一模一样的，首先创建实现类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserClientFallback</span> <span class="keyword">implements</span> <span class="title class_">UserClient</span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUserById</span><span class="params">(<span class="type">int</span> uid)</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user.setName(<span class="string">&quot;我是替代方案&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后直接启动就可以了，中途的时候我们吧用户服务全部下掉，可以看到正常使用替代方案：</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24ely1h0pp7oe8yuj228k06iwfy.jpg" alt="image-20220328165606119"></p>
+<p>这样Feign的配置就OK了，那么传统的RestTemplate呢？我们可以使用<code>@SentinelRestTemplate</code>注解实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@LoadBalanced</span></span><br><span class="line"><span class="meta">@SentinelRestTemplate(blockHandler = &quot;handleException&quot;, blockHandlerClass = ExceptionUtil.class,</span></span><br><span class="line"><span class="meta">    fallback = &quot;fallback&quot;, fallbackClass = ExceptionUtil.class)</span> <span class="comment">//这里同样可以设定fallback等参数</span></span><br><span class="line"><span class="keyword">public</span> RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里就不多做赘述了。</p>
+<hr>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24egy1h0qla4zlihj21m0064glz.jpg" alt="image-20220329112537891"></p>
+<h2 id="Seata与分布式事务"><a href="#Seata与分布式事务" class="headerlink" title="Seata与分布式事务"></a>Seata与分布式事务</h2><p>重难点内容，坑也多得离谱。。。官方文档：<a target="_blank" rel="noopener" href="https://seata.io/zh-cn/docs/overview/what-is-seata.html">https://seata.io/zh-cn/docs/overview/what-is-seata.html</a></p>
+<p>数据库事务ACID特性：</p>
+<ul>
+<li><strong>原子性：</strong>一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有执行过一样。</li>
+<li><strong>一致性：</strong>在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</li>
+<li><strong>隔离性：</strong>数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读已提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。</li>
+<li><strong>持久性：</strong>事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</li>
+</ul>
+<p>在分布式环境下，比如我们下单购物，整个流程可能是这样的：先调用库存服务对库存进行减扣 -&gt; 然后订单服务开始下单 -&gt; 最后用户账户服务进行扣款，虽然看似是一个很简单的一个流程，但是如果没有事务的加持，很有可能会由于中途出错，比如整个流程中订单服务出现问题，那么就会导致库存扣了，但是实际上这个订单并没有生成，用户也没有付款。</p>
+<p><img src="../images/SpringCloud%E7%AC%94%E8%AE%B0%EF%BC%882%EF%BC%89/e6c9d24egy1h0qkx2w3olj21jo0763zr.jpg" alt="image-20220329111304542"></p>
+<p>上面这种情况时间就是一种多服务多数据源的分布式事务模型（比较常见），因此，为了解决这种情况，我们就得实现分布式事务，让这整个流程保证原子性。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">lcq</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/post/2a78d0be.html">http://example.com/post/2a78d0be.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SpringCloud/">SpringCloud</a></div><div class="post_share"><div class="social-share" data-image="https://iw233.cn/api.php?sort=pc" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg"/></a><div class="post-qr-code-desc"></div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg"/></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/67c8035e.html"><img class="next-cover" src="https://iw233.cn/api.php?sort=pc" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">SpringCloud笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/post/67c8035e.html" title="SpringCloud笔记"><img class="cover" src="https://iw233.cn/api.php?sort=pc" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-23</div><div class="title">SpringCloud笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">lcq</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">20</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lcqlcqq" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E8%BF%9B%E9%98%B6"><span class="toc-number">1.</span> <span class="toc-text">微服务进阶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nacos%EF%BC%9A%E6%9B%B4%E5%8A%A0%E5%85%A8%E8%83%BD%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83"><span class="toc-number">2.</span> <span class="toc-text">Nacos：更加全能的注册中心</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2"><span class="toc-number">2.1.</span> <span class="toc-text">安装与部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0"><span class="toc-number">2.2.</span> <span class="toc-text">服务注册与发现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%EF%BC%88OpenFeign%EF%BC%89"><span class="toc-number">2.3.</span> <span class="toc-text">负载均衡（OpenFeign）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E7%BE%A4%E5%88%86%E5%8C%BA%EF%BC%88%E6%9C%8D%E5%8A%A1%E5%88%86%E5%8C%BA%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">集群分区（服务分区）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83"><span class="toc-number">2.5.</span> <span class="toc-text">配置中心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="toc-number">2.6.</span> <span class="toc-text">命名空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8%EF%BC%88nacos%E9%9B%86%E7%BE%A4%EF%BC%89"><span class="toc-number">2.7.</span> <span class="toc-text">实现高可用（nacos集群）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sentinel-%E6%B5%81%E9%87%8F%E9%98%B2%E5%8D%AB%E5%85%B5"><span class="toc-number">3.</span> <span class="toc-text">Sentinel 流量防卫兵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%8E%E9%83%A8%E7%BD%B2-1"><span class="toc-number">3.1.</span> <span class="toc-text">安装与部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-number">3.2.</span> <span class="toc-text">流量控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E9%99%90%E6%B5%81%E7%AD%96%E7%95%A5%EF%BC%9A"><span class="toc-number">3.2.1.</span> <span class="toc-text">（1）限流策略：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%B5%81%E6%8E%A7%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number">3.2.2.</span> <span class="toc-text">（2）流控模式：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E6%B5%81%E5%92%8C%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">3.3.</span> <span class="toc-text">限流和异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%83%AD%E7%82%B9%E5%8F%82%E6%95%B0%E9%99%90%E6%B5%81"><span class="toc-number">3.4.</span> <span class="toc-text">热点参数限流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD%E5%92%8C%E9%99%8D%E7%BA%A7"><span class="toc-number">3.5.</span> <span class="toc-text">服务熔断和降级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%94%E7%A6%BB%E6%96%B9%E6%A1%88"><span class="toc-number">3.5.1.</span> <span class="toc-text">隔离方案</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E9%9A%94%E7%A6%BB"><span class="toc-number">3.5.1.1.</span> <span class="toc-text">线程池隔离</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E9%9A%94%E7%A6%BB"><span class="toc-number">3.5.1.2.</span> <span class="toc-text">信号量隔离</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7%EF%BC%9A"><span class="toc-number">3.5.2.</span> <span class="toc-text">服务降级：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%86%94%E6%96%AD%E7%AD%96%E7%95%A5%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="toc-number">3.5.3.</span> <span class="toc-text">熔断策略的三种模式：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seata%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="toc-number">4.</span> <span class="toc-text">Seata与分布式事务</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/2a78d0be.html" title="SpringCloud笔记（2）">SpringCloud笔记（2）</a><time datetime="2022-07-26T12:21:53.000Z" title="Created 2022-07-26 20:21:53">2022-07-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/67c8035e.html" title="SpringCloud笔记">SpringCloud笔记</a><time datetime="2022-07-23T07:04:04.000Z" title="Created 2022-07-23 15:04:04">2022-07-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/be69454d.html" title="三、Android四大组件">三、Android四大组件</a><time datetime="2022-07-22T15:15:31.000Z" title="Created 2022-07-22 23:15:31">2022-07-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/34811d5f.html" title="贪心">贪心</a><time datetime="2022-07-22T15:09:21.000Z" title="Created 2022-07-22 23:09:21">2022-07-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/9cbcbe19.html" title="二、UI与布局">二、UI与布局</a><time datetime="2022-07-18T09:47:46.000Z" title="Created 2022-07-18 17:47:46">2022-07-18</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By lcq</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
