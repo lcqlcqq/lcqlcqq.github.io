@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Centos7教程 | Syerenc</title><meta name="author" content="lcq"><meta name="copyright" content="lcq"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1、VMware15 Pro安装下载地址：VMware15 下载完成后，右键以管理员身份运行，安装过程中可能会遇到需要重新启动电脑的弹窗，重启然后再次点击安装包进行安装即可。 最后安装完毕之后，输入许可证：GG3E8-FAW85-4802Y-Z5MX9-Z6RC0 2、CentOS7.7安装CentOS7.7下载虽然目前已经更新到 Centos8.x，但是实际最广泛的还是 Centos7.x，所以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos7教程">
+<meta property="og:url" content="http://example.com/post/undefined.html">
+<meta property="og:site_name" content="Syerenc">
+<meta property="og:description" content="1、VMware15 Pro安装下载地址：VMware15 下载完成后，右键以管理员身份运行，安装过程中可能会遇到需要重新启动电脑的弹窗，重启然后再次点击安装包进行安装即可。 最后安装完毕之后，输入许可证：GG3E8-FAW85-4802Y-Z5MX9-Z6RC0 2、CentOS7.7安装CentOS7.7下载虽然目前已经更新到 Centos8.x，但是实际最广泛的还是 Centos7.x，所以">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://iw233.cn/api.php?sort=pc">
+<meta property="article:published_time" content="2022-11-08T08:26:26.000Z">
+<meta property="article:modified_time" content="2022-11-08T11:19:25.815Z">
+<meta property="article:author" content="lcq">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://iw233.cn/api.php?sort=pc"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/post/undefined"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Centos7教程',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-08 19:19:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/source/css/jianbian.css"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> <script src="/live2d-widget/autoload.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://iw233.cn/api.php?sort=pc')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Syerenc</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Centos7教程</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-11-08T08:26:26.000Z" title="Created 2022-11-08 16:26:26">2022-11-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-11-08T11:19:25.815Z" title="Updated 2022-11-08 19:19:25">2022-11-08</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">868</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>3min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Centos7教程"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="1、VMware15-Pro安装"><a href="#1、VMware15-Pro安装" class="headerlink" title="1、VMware15 Pro安装"></a>1、VMware15 Pro安装</h2><p>下载地址：<a href="https://link.juejin.cn/?target=https://www.vmware.com/cn/products/workstation-pro/workstation-pro-evaluation.html">VMware15</a></p>
+<p>下载完成后，右键以管理员身份运行，安装过程中可能会遇到需要重新启动电脑的弹窗，重启然后再次点击安装包进行安装即可。</p>
+<p>最后安装完毕之后，输入许可证：<code>GG3E8-FAW85-4802Y-Z5MX9-Z6RC0</code></p>
+<h2 id="2、CentOS7-7安装"><a href="#2、CentOS7-7安装" class="headerlink" title="2、CentOS7.7安装"></a>2、CentOS7.7安装</h2><h3 id="CentOS7-7下载"><a href="#CentOS7-7下载" class="headerlink" title="CentOS7.7下载"></a>CentOS7.7下载</h3><p>虽然目前已经更新到 Centos8.x，但是实际最广泛的还是 Centos7.x，所以这里使用 Centos7.7。</p>
+<p>（1）进入 Centos 下载官网，找到 <a href="https://link.juejin.cn/?target=http://isoredirect.centos.org/centos/7/isos/x86_64/">Centos 7.7 版本</a>。这里面很多镜像资源，随便点击一个下载。如：CentOS-7-x86_64-DVD-2009.iso</p>
+<p>（2）打开你的 VMware Workstation Pro，创建虚拟机并载入iso文件。设置cpu核数大些，内存4G等，开启虚拟机后，键盘上下键选择Install CentOS 7，按Enter。</p>
+<p>（3）然后来到虚拟机配置页面：</p>
+<p>1、设置语言，默认 English，直接点击 Continue。<br>2、设置时区和时间。<br>3、软件安装，选Server With GUI，右边选择Development Tools 和 Security Tools。<br>4、设置安装位置，选择自己手动配置分区，配置三个分区，/boot（300M）、swap（512M） 和 / 根分区。然后点击接受更改。<br>5、开始安装，设置密码。<br>6、等待一段时间安装完成后，然后 reboot。</p>
+<h3 id="Centos7-7配置"><a href="#Centos7-7配置" class="headerlink" title="Centos7.7配置"></a>Centos7.7配置</h3><p>虚拟机登录</p>
+<p>一步一步往下走会发现是帮助你新建了一个用户（q1*2/w），不过我们还是使用 root 账户进行登录，密码即为之前设置的密码。</p>
+<p>若要进一步进行网卡和防火墙的配置，可参考：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904101583519752">https://juejin.cn/post/6844904101583519752</a></p>
+<h3 id="防火墙设置"><a href="#防火墙设置" class="headerlink" title="防火墙设置"></a>防火墙设置</h3><p>1、检查是否安装了 iptables</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service iptables <span class="built_in">status</span></span><br></pre></td></tr></table></figure>
+
+<p>安装 iptables</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum install -y iptables</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>升级iptables</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">update</span> iptables</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>安装iptables-services</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install iptables-services</span><br></pre></td></tr></table></figure>
+
+<p>iptables-services 和 iptables 是不一样的，安装了 services 才有 /etc/sysconfig/iptables。</p>
+<p>2、永久关闭 firewalld 防火墙（centos7默认的防火墙是firewalld防火墙，不是使用iptables，因此需要关闭firewalld服务） </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service  // 停止firewalld服务</span><br><span class="line"></span><br><span class="line">systemctl disable firewalld.service // 开机禁用firewalld服务</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>3、 设置现有规则 </p>
+<p>我们很多时候在 Liunx 系统上安装了 Web 服务应用后（如tomcat、apache等），需要让其它电脑能访问到该应用，而Linux系统（Centos、redha t等）的防火墙是默认只对外开放了22端口。 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">iptables -P INPUT ACCEPT        //先允许所有</span><br><span class="line">iptables -F            //清空所有默认规则</span><br><span class="line">iptables -X            //清空所有自定义规则</span><br><span class="line">iptables -Z            //所有计数器归0</span><br><span class="line">iptables -A INPUT -i lo -j ACCEPT        //允许来自于lo接口的数据包(本地访问)</span><br><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT    //开放22端口</span><br><span class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT        //开放21端口(FTP)</span><br><span class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT        //开放80端口(HTTP)</span><br><span class="line">iptables -A INPUT -p tcp --dport 443 -j ACCEPT        //开放443端口(HTTPS)</span><br><span class="line">iptables -A INPUT -i ens+ -p icmp --icmp-type 8 -j ACCEPT    //允许ping</span><br><span class="line">iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT        //允许接受本机请求之后的返回数据 RELATED,是为FTP设置的</span><br><span class="line">iptables -P INPUT DROP        //其他入站一律丢弃</span><br><span class="line">iptables -P OUTPUT ACCEPT        //所有出站一律绿灯</span><br><span class="line">iptables -P FORWARD DROP        //所有转发一律丢弃</span><br><span class="line">service iptables save        //保存上述规则</span><br></pre></td></tr></table></figure>
+
+<p>4、 开启iptables服务 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable iptables.service    //注册iptables服务相当于以前的chkconfig iptables on</span><br><span class="line">systemctl start iptables.service        //开启服务</span><br><span class="line">systemctl status iptables.service        //查看状态</span><br></pre></td></tr></table></figure>
+
+<p>5、需要开放端口时，如开放6379端口，使用命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 6379 -j ACCEPT </span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">lcq</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/post/undefined.html">http://example.com/post/undefined.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://iw233.cn/api.php?sort=pc" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg"/></a><div class="post-qr-code-desc"></div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg"/></a><div class="post-qr-code-desc"></div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/post/a2d3b88e.html"><img class="prev-cover" src="https://iw233.cn/api.php?sort=pc" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">Redis从入门到入土（</div></div></a></div><div class="next-post pull-right"><a href="/post/92c4b7db.html"><img class="next-cover" src="https://iw233.cn/api.php?sort=pc" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">SpringCloud笔记（3）</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">lcq</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">37</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/lcqlcqq" target="_blank" title="Github"><i class="fab fa-github"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81VMware15-Pro%E5%AE%89%E8%A3%85"><span class="toc-number">1.</span> <span class="toc-text">1、VMware15 Pro安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81CentOS7-7%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">2、CentOS7.7安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS7-7%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.1.</span> <span class="toc-text">CentOS7.7下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Centos7-7%E9%85%8D%E7%BD%AE"><span class="toc-number">2.2.</span> <span class="toc-text">Centos7.7配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E8%AE%BE%E7%BD%AE"><span class="toc-number">2.3.</span> <span class="toc-text">防火墙设置</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/a2d3b88e.html" title="Redis从入门到入土（">Redis从入门到入土（</a><time datetime="2022-11-11T09:14:25.000Z" title="Created 2022-11-11 17:14:25">2022-11-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/undefined.html" title="Centos7教程">Centos7教程</a><time datetime="2022-11-08T08:26:26.000Z" title="Created 2022-11-08 16:26:26">2022-11-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/92c4b7db.html" title="SpringCloud笔记（3）">SpringCloud笔记（3）</a><time datetime="2022-10-16T08:24:03.000Z" title="Created 2022-10-16 16:24:03">2022-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/c9acdb25.html" title="负载均衡">负载均衡</a><time datetime="2022-10-06T04:23:26.000Z" title="Created 2022-10-06 12:23:26">2022-10-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/post/2633a26.html" title="位运算">位运算</a><time datetime="2022-09-26T12:17:02.000Z" title="Created 2022-09-26 20:17:02">2022-09-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By lcq</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="Switch Between Traditional Chinese And Simplified Chinese">繁</button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
